@@ -100,12 +100,45 @@
               </p>
 
               <div class="cta-group">
-                <a href="#portfolio" class="btn-ghost">
+                <a href="portfolio.html" class="btn-ghost">
                   View My Work <i class="bi bi-arrow-up-right"></i>
                 </a>
-                <a href="#" class="link-underline">
-                  Download Resume <i class="bi bi-download"></i>
-                </a>
+                <!-- anchor triggers JS -->
+<a href="#" id="downloadResume" class="link-underline">
+  Download Resume <i class="bi bi-download"></i>
+</a>
+
+<script>
+document.getElementById('downloadResume').addEventListener('click', async function(e) {
+  e.preventDefault();
+  try {
+    // path to file on your site
+    const fileUrl = 'assets/files/Nethmi_Tharushi_resume-file';
+    const filename = 'Nethmi-Tharushi-Resume.pdf';
+
+    const res = await fetch(fileUrl);
+    if (!res.ok) throw new Error('Network response was not ok');
+
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    window.URL.revokeObjectURL(url);
+  } catch (err) {
+    console.error('Download failed', err);
+    // fallback: open the file in new tab
+    window.open('assets/files/Nethmi_Tharushi_resume-file', '_blank');
+  }
+});
+</script>
+
+
+
               </div>
             </div>
           </div>
